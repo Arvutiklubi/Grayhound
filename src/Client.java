@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class Client{
+public class Client implements Runnable{
     InetAddress hostIP;
     int hostPort;
 
@@ -27,7 +27,7 @@ public class Client{
         }
     }
 
-    public void update() {
+    public void run() {
         try {
             byte[] sendData;
             byte[] receiveData = new byte[1024];
@@ -40,8 +40,9 @@ public class Client{
             clientSocket.send(sendPacket);
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             clientSocket.receive(receivePacket);
-            String modifiedSentence = new String(receivePacket.getData());
-            System.out.println("FROM SERVER:" + modifiedSentence);
+
+            handleReceive(receivePacket.getData());
+
             clientSocket.close();
 
         } catch (Exception e) {
