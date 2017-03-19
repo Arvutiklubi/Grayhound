@@ -4,7 +4,8 @@ public class PhysicsObject2D {
     public double x, y;
     public double Vx, Vy;
     public double Ax, Ay;
-    public double gravity;
+    public double cVx, cVy;
+    public double gravity = 0.5f;
 
     public PhysicsObject2D(double x_, double y_)
     {
@@ -13,7 +14,7 @@ public class PhysicsObject2D {
         Ax = 0; Ay = 0;
     }
 
-    public void update(int Delta)
+    public void update(int Delta, GameContainer container)
     {
 
     }
@@ -30,8 +31,8 @@ public class PhysicsObject2D {
 
     public double[] getDeltaPos(int Delta)
     {
-        double dx = Vx * Delta + Ax * Math.pow(Delta, 2) / 2;
-        double dy = Vy * Delta + (Ay + gravity) * Math.pow(Delta, 2) / 2;
+        double dx = (Vx + cVx) * Delta + Ax * Math.pow(Delta, 2) / 2;
+        double dy = (Vy + cVy) * Delta + (Ay + gravity) * Math.pow(Delta, 2) / 2;
 
         return new double[]{dx, dy};
     }
@@ -69,5 +70,11 @@ public class PhysicsObject2D {
     {
         x += dVx[0];
         y += dVx[1];
+    }
+
+    public void control(double[] cV)
+    {
+        cVx = cV[0];
+        cVy = cV[1];
     }
 }

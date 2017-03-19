@@ -34,6 +34,9 @@ public class Main extends BasicGame{
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         if (!HOST) {new Thread(client).start();}
+        for (PhysicsObject2D obj : gameObjects) {
+            obj.update(delta, container);
+        }
     }
 
     @Override

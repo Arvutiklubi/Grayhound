@@ -8,6 +8,7 @@ public class Rectangle extends PhysicsObject2D {
 
     public double w, h;
     public boolean isStatic;
+    private ArrayList<Rectangle> dbgmap = new ArrayList<Rectangle>();
 
     public Rectangle(double x_,double y_,double w_,double h_) {
         super(x_, y_);
@@ -20,6 +21,11 @@ public class Rectangle extends PhysicsObject2D {
         isStatic = status;
     }
 
+    public void update(int Delta, GameContainer container)
+    {
+        physicsUpdate(Delta, dbgmap);
+    }
+
     public void physicsUpdate(int Delta, ArrayList<Rectangle> map) {
         if (isStatic) {
             return;
@@ -27,6 +33,8 @@ public class Rectangle extends PhysicsObject2D {
 
         double[] dp = getDeltaPos(Delta);
         double[] dV = getDeltaVel(Delta);
+
+        /*
 
         for (Rectangle other : map) {
             // Could be optimized but ehh.
@@ -41,7 +49,7 @@ public class Rectangle extends PhysicsObject2D {
                 dp[1] = 0;
                 dV[1] = 0;
             }
-        }
+        }*/
 
         updatePos(dp);
         updateVel(dV);
