@@ -1,3 +1,4 @@
+import org.newdawn.slick.*;
 import java.util.ArrayList;
 
 /**
@@ -44,6 +45,12 @@ public class Rectangle extends PhysicsObject2D {
 
         updatePos(dp);
         updateVel(dV);
+    }
+
+    public void render(GameContainer container, Graphics g)
+    {
+        g.setColor(Color.cyan);
+        g.drawRect((int) x, (int) y, (int) w, (int) h);
     }
 
 
