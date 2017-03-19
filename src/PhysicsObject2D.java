@@ -77,4 +77,15 @@ public class PhysicsObject2D {
         cVx = cV[0];
         cVy = cV[1];
     }
+
+    public double[] getTransmitData()
+    {
+        return new double[]{x, y};
+    }
+
+    public void setTransmitData(double[] in)
+    {
+        x = in[0];
+        y = in[1];
+    }
 }

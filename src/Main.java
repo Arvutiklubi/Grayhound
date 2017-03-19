@@ -20,6 +20,7 @@ public class Main extends BasicGame{
     @Override
     public void init(GameContainer container) throws SlickException {
         gameObjects.add(new Player(0,0,100, 100));
+        gameObjects.add(new Player(150,200,100, 100));
 
         if (HOST) {
             host = new Host();
@@ -27,15 +28,21 @@ public class Main extends BasicGame{
             new Thread(host).start();
         } else {
             client = new Client();
-            client.setPlayerObject(gameObjects.get(0));
+            client.setGameObjects(gameObjects);
         }
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-        if (!HOST) {new Thread(client).start();}
-        for (PhysicsObject2D obj : gameObjects) {
-            obj.update(delta, container);
+        if (HOST) {
+            for (int i = 0; i < gameObjects.size(); i++) {
+                if (i != 1) {
+                    gameObjects.get(i).update(delta, container);
+                }
+            }
+        } else {
+            new Thread(client).start();
+            gameObjects.get(1).update(delta, container);
         }
     }
 

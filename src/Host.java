@@ -36,12 +36,52 @@ public class Host implements Runnable {
         }
     }
 
-    public void handleReceive(byte[] data) {
+    public void handleReceive(byte[] data) throws Exception{
+        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+        ObjectInput in = null;
+        double[] inputData;
+        try {
+            in = new ObjectInputStream(bis);
+            inputData = (double[]) in.readObject();
+
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                // ignore close exception
+            }
+        }
+
+        gameObjects.get(1).setTransmitData(inputData);
 
     }
 
-    public byte[] handleSend() {
-        return new byte[1024];
+    public byte[] handleSend() throws Exception {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = null;
+        byte[] byteData;
+
+        ArrayList<double[]> data = new ArrayList<>();
+        for (PhysicsObject2D p : gameObjects) {
+            data.add(p.getTransmitData());
+        }
+
+        try {
+            out = new ObjectOutputStream(bos);
+            out.writeObject(data);
+            out.flush();
+            byteData = bos.toByteArray();
+
+        } finally {
+            try {
+                bos.close();
+            } catch (IOException ex) {
+                // ignore close exception
+            }
+        }
+        return byteData;
     }
 
     public void setGameObjects(ArrayList<PhysicsObject2D> objects) {

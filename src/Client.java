@@ -1,11 +1,12 @@
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class Client implements Runnable{
     InetAddress hostIP;
     int hostPort;
 
-    private PhysicsObject2D playerObject;
+    private ArrayList<PhysicsObject2D> gameObjects;
 
     public Client(){
         try {
@@ -53,14 +54,53 @@ public class Client implements Runnable{
         return;
     }
 
-    public void handleReceive(byte[] data) {
+    public void handleReceive(byte[] data) throws Exception{
+        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+        ObjectInput in = null;
+        ArrayList<double[]> inputData;
+        try {
+            in = new ObjectInputStream(bis);
+            inputData = (ArrayList<double[]>) in.readObject();
+
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                // ignore close exception
+            }
+        }
+
+        for (int i = 0; i < inputData.size(); i++){
+            if (i != 1) {
+                gameObjects.get(i).setTransmitData(inputData.get(i));
+            }
+        }
+
     }
 
     public byte[] handleSend() throws Exception{
-        return new byte[1024];
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = null;
+        byte[] byteData;
+        try {
+            out = new ObjectOutputStream(bos);
+            out.writeObject(gameObjects.get(1).getTransmitData());
+            out.flush();
+            byteData = bos.toByteArray();
+
+        } finally {
+            try {
+                bos.close();
+            } catch (IOException ex) {
+                // ignore close exception
+            }
+        }
+        return byteData;
     }
 
-    public void setPlayerObject(PhysicsObject2D player){
-        playerObject = player;
+    public void setGameObjects(ArrayList<PhysicsObject2D> objects){
+        gameObjects = objects;
     }
 }
