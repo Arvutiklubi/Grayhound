@@ -32,8 +32,8 @@ public class PhysicsObject2D {
 
     public double[] getDeltaPos(int Delta)
     {
-        double dx = (Vx + cVx) * Delta + (Ax + cAx) * Math.pow(Delta, 2) / 2;
-        double dy = (Vy + cVy) * Delta + (Ay + gravity + cAy) * Math.pow(Delta, 2) / 2;
+        double dx = (Vx + cVx) * Delta; //+ (Ax + cAx) * Math.pow(Delta, 2) / 2;
+        double dy = (Vy + cVy) * Delta; //+ (Ay + gravity + cAy) * Math.pow(Delta, 2) / 2;
 
         return new double[]{dx, dy};
     }

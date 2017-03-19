@@ -23,16 +23,12 @@ public class Rectangle extends PhysicsObject2D {
 
     public void update(int Delta, GameContainer container)
     {
-        physicsUpdate(Delta, dbgmap);
     }
 
-    public void physicsUpdate(int Delta, ArrayList<Rectangle> map) {
+    public void physicsUpdate(int Delta, ArrayList<Rectangle> map, double[] dp, double[] dV) {
         if (isStatic) {
             return;
         }
-
-        double[] dp = getDeltaPos(Delta);
-        double[] dV = getDeltaVel(Delta);
 
         /*
 
