@@ -3,11 +3,36 @@ import java.net.*;
 import java.util.ArrayList;
 
 public class Host implements Runnable {
+    InetAddress hostIP;
+    int hostPort;
+
     private ArrayList<PhysicsObject2D> gameObjects;
+
+    public Host(){
+        try {
+            System.out.print("Enter your IP address : ");
+            BufferedReader inFromUser =
+                    new BufferedReader(new InputStreamReader(System.in));
+
+            hostIP = InetAddress.getByName(inFromUser.readLine());
+
+            System.out.print("Enter your port : ");
+            inFromUser =
+                    new BufferedReader(new InputStreamReader(System.in));
+
+            hostPort = Integer.parseInt(inFromUser.readLine());
+
+            System.out.println(hostIP.getHostAddress());
+            System.out.println(hostPort);
+
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
 
     public void run(){
         try {
-            DatagramSocket serverSocket = new DatagramSocket(35000);
+            DatagramSocket serverSocket = new DatagramSocket(hostPort, hostIP);
             byte[] receiveData = new byte[1024];
             byte[] sendData;
 

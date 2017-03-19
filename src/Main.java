@@ -22,7 +22,7 @@ public class Main extends BasicGame{
         gameObjects.add(new Player(0,0,100, 100));
         gameObjects.add(new Player(150,200,100, 100));
 
-        if (true) {
+        if (HOST) {
             host = new Host();
             host.setGameObjects(gameObjects);
 

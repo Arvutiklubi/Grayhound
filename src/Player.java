@@ -46,7 +46,7 @@ public class Player extends Rectangle {
         double[] dp = getDeltaPos(delta);
         double[] dV = getDeltaVel(delta);
 
-        System.out.println(y + " " + container.getHeight());
+        //System.out.println(y + " " + container.getHeight());
         if (y + dp[1] > container.getHeight() - this.h)
         {
             dp[1] = 0;
