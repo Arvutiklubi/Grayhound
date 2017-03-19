@@ -21,9 +21,10 @@ public class Main extends BasicGame{
     public void init(GameContainer container) throws SlickException {
         gameObjects.add(new Player(0,0,100, 100));
 
-        if (HOST) {
+        if (true) {
             host = new Host();
             host.setGameObjects(gameObjects);
+
             new Thread(host).start();
         } else {
             client = new Client();

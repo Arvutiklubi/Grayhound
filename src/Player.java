@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 public class Player extends Rectangle {
 
     public double speed = 1.1;
+    public double jump_power = -0.6;
     public double[] cVtarget = new double[]{0,0};
     public double[] cVcur = new double[]{0,0};
 
@@ -37,14 +38,20 @@ public class Player extends Rectangle {
             cVtarget[0] = 0;
         }
 
-        cVcur[0] = lerp(cVcur[0], cVtarget[0], 0.01 * delta );
-        cVcur[1] = lerp(cVcur[1], cVtarget[1], 0.01 * delta );
+        if (input.isKeyPressed(Input.KEY_SPACE))
+        {
+            Vy = jump_power;
+        }
+
+        System.out.println(Vy);
+        cVcur[0] = lerp(cVcur[0], cVtarget[0], 0.09 * delta);
+        cVcur[1] = lerp(cVcur[1], cVtarget[1], 0.09 * delta);
         control(cVcur);
 
         super.update(delta, container);
     }
 
-    public static float lerp(float a, float b, float t) {
+    private static float lerp(float a, float b, float t) {
         if (t < 0)
             return a;
         else if (t > 1)
@@ -52,7 +59,8 @@ public class Player extends Rectangle {
         else
             return a + t * (b - a);
     }
-    public static double lerp(double a, double b, double t) {
+
+    private static double lerp(double a, double b, double t) {
         if (t < 0)
             return a;
         else if (t > 1)
