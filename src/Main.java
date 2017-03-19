@@ -1,5 +1,6 @@
 import org.newdawn.slick.*;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,10 +8,13 @@ public class Main extends BasicGame{
     private static int screenW = 900;
     private static int screenH = 600;
 
+    private ArrayList<PhysicsObject2D> gameObjects = new ArrayList<>();
+
     public Main (String appName) {super(appName);}
 
     @Override
     public void init(GameContainer container) throws SlickException {
+       gameObjects.add(new Player(0,0,100, 100));
     }
 
     @Override
@@ -20,6 +24,10 @@ public class Main extends BasicGame{
 
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
+        for (PhysicsObject2D obj : gameObjects)
+        {
+            obj.render(container, g);
+        }
 
     }
 

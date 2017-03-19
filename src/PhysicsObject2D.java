@@ -1,4 +1,4 @@
-import jdk.internal.util.xml.impl.Pair;
+import org.newdawn.slick.*;
 
 public class PhysicsObject2D {
     public double x, y;
@@ -18,7 +18,7 @@ public class PhysicsObject2D {
 
     }
 
-    public void render()
+    public void render(GameContainer container, Graphics g)
     {
 
     }
