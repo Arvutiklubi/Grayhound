@@ -1,9 +1,9 @@
 import java.io.*;
 import java.net.*;
 
-public class Client {
+public class Client{
     InetAddress hostIP;
-    InetAddress hostPort;
+    int hostPort;
 
     public Client(){
         try {
@@ -11,13 +11,51 @@ public class Client {
             BufferedReader inFromUser =
                     new BufferedReader(new InputStreamReader(System.in));
 
-            System.out.println(inFromUser.readLine());
+            hostIP = InetAddress.getByName(inFromUser.readLine());
+
+            System.out.print("Enter the hosts port : ");
+            inFromUser =
+                    new BufferedReader(new InputStreamReader(System.in));
+
+            hostPort = Integer.parseInt(inFromUser.readLine());
+
+            System.out.println(hostIP.getHostAddress());
+            System.out.println(hostPort);
+
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
     }
 
-    public void receive() {
+    public void update() {
+        try {
+            byte[] sendData;
+            byte[] receiveData = new byte[1024];
 
+            DatagramSocket clientSocket = new DatagramSocket();
+
+            sendData = handleSend();
+
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, hostIP, hostPort);
+            clientSocket.send(sendPacket);
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            clientSocket.receive(receivePacket);
+            String modifiedSentence = new String(receivePacket.getData());
+            System.out.println("FROM SERVER:" + modifiedSentence);
+            clientSocket.close();
+
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void handleReceive(byte[] data) {
+
+
+    }
+
+    public byte[] handleSend() {
+
+        return new byte[1024];
     }
 }
