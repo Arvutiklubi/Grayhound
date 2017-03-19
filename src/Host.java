@@ -1,14 +1,15 @@
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class Host implements Runnable {
-
+    private ArrayList<PhysicsObject2D> gameObjects;
 
     public void run(){
         try {
             DatagramSocket serverSocket = new DatagramSocket(35000);
             byte[] receiveData = new byte[1024];
-            byte[] sendData = new byte[1024];
+            byte[] sendData;
 
             while (true) {
                 // Receive a packet
@@ -35,10 +36,16 @@ public class Host implements Runnable {
         }
     }
 
-    public void handleReceive(byte[] data) {}
+    public void handleReceive(byte[] data) {
+
+    }
 
     public byte[] handleSend() {
         return new byte[1024];
+    }
+
+    public void setGameObjects(ArrayList<PhysicsObject2D> objects) {
+        gameObjects = objects;
     }
 
 }

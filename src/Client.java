@@ -5,6 +5,8 @@ public class Client implements Runnable{
     InetAddress hostIP;
     int hostPort;
 
+    private PhysicsObject2D playerObject;
+
     public Client(){
         try {
             System.out.print("Enter the hosts IP address : ");
@@ -29,8 +31,8 @@ public class Client implements Runnable{
 
     public void run() {
         try {
-            byte[] sendData;
             byte[] receiveData = new byte[1024];
+            byte[] sendData;
 
             DatagramSocket clientSocket = new DatagramSocket();
 
@@ -48,15 +50,17 @@ public class Client implements Runnable{
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
+        return;
     }
 
     public void handleReceive(byte[] data) {
-
-
     }
 
-    public byte[] handleSend() {
-
+    public byte[] handleSend() throws Exception{
         return new byte[1024];
+    }
+
+    public void setPlayerObject(PhysicsObject2D player){
+        playerObject = player;
     }
 }

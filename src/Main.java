@@ -5,21 +5,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends BasicGame{
+    private final boolean HOST = false;
+
     private static int screenW = 900;
     private static int screenH = 600;
 
     private ArrayList<PhysicsObject2D> gameObjects = new ArrayList<>();
 
+    private Host host;
+    private Client client;
+
     public Main (String appName) {super(appName);}
 
     @Override
     public void init(GameContainer container) throws SlickException {
-       gameObjects.add(new Player(0,0,100, 100));
+        gameObjects.add(new Player(0,0,100, 100));
+
+        if (HOST) {
+            host = new Host();
+            host.setGameObjects(gameObjects);
+            new Thread(host).start();
+        } else {
+            client = new Client();
+            client.setPlayerObject(gameObjects.get(0));
+        }
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-
+        if (!HOST) {new Thread(client).start();}
     }
 
     @Override
