@@ -35,7 +35,7 @@ public class Rectangle extends PhysicsObject2D {
                 dV[0] = 0;
             }
 
-            if ( this.y < other.y + other.h && this.h + this.y > other.y))
+            if ( this.y < other.y + other.h && this.h + this.y > other.y)
             {
                 dp[1] = 0;
                 dV[1] = 0;

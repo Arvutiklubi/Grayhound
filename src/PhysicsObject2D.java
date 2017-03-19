@@ -71,4 +71,3 @@ public class PhysicsObject2D {
         y += dVx[1];
     }
 }
-}
