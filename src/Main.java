@@ -22,9 +22,10 @@ public class Main extends BasicGame{
         gameObjects.add(new Player(0,0,100, 100));
         gameObjects.add(new Player(150,200,100, 100));
 
-        if (HOST) {
+        if (true) {
             host = new Host();
             host.setGameObjects(gameObjects);
+
             new Thread(host).start();
         } else {
             client = new Client();
